@@ -3,6 +3,7 @@ package repository
 import (
 	"MovieDatabases/entities"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 )
 
@@ -39,4 +40,25 @@ func (r *MovieRepository) Create(userMovie entities.Movie) error {
 
 	return nil
 
+}
+
+func (r *MovieRepository) FindById(passedId string) (entities.Movie, error) {
+	dbEnt := entities.DbMovie{}
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return dbEnt.Movies[0], err
+	}
+
+	err = json.Unmarshal(file, &dbEnt)
+	if err != nil {
+		return dbEnt.Movies[0], err
+	}
+
+	for _, v := range dbEnt.Movies {
+		if v.Id == passedId {
+			return v, nil
+		}
+	}
+
+	return dbEnt.Movies[0], errors.New("id not found")
 }

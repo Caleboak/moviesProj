@@ -6,6 +6,8 @@ import (
 	"encoding/json"
 
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type MovieHandler struct {
@@ -26,6 +28,18 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = m.movieService.Create(ent)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+}
+
+func (m *MovieHandler) ReadMovie(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	_, err := m.movieService.Read(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
