@@ -2,6 +2,7 @@ package handler
 
 import (
 	"MovieDatabases/entities"
+	"MovieDatabases/repository"
 	"MovieDatabases/services"
 	"encoding/json"
 
@@ -29,21 +30,72 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 
 	err = m.movieService.Create(ent)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		switch err {
+		case services.BadRequest:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+
+		case repository.NotFound:
+			http.Error(w, err.Error(), http.StatusNotFound)
+
+		case repository.ServerError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		}
 	}
 	w.Header().Set("Content-Type", "application/json")
+
 	w.WriteHeader(http.StatusOK)
 
+}
+
+func (m *MovieHandler) ReadAllMovie(w http.ResponseWriter, r *http.Request) {
+
+	movie, err := m.movieService.ReadAll()
+
+	if err != nil {
+		switch err {
+		case services.BadRequest:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+
+		case repository.NotFound:
+			http.Error(w, err.Error(), http.StatusNotFound)
+
+		case repository.ServerError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	Marshaled, _ := json.MarshalIndent(movie, "", " ")
+
+	w.Write([]byte(Marshaled))
 }
 
 func (m *MovieHandler) ReadMovie(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	_, err := m.movieService.Read(id)
+
+	movie, err := m.movieService.ReadbyId(id)
+
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		switch err {
+		case services.BadRequest:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+
+		case repository.NotFound:
+			http.Error(w, err.Error(), http.StatusNotFound)
+
+		case repository.ServerError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		}
 	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	Marshaled, _ := json.MarshalIndent(movie, "", " ")
 
+	w.Write([]byte(Marshaled))
 }

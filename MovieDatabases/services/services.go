@@ -3,7 +3,8 @@ package services
 import (
 	"MovieDatabases/entities"
 	"MovieDatabases/repository"
-	"errors"
+
+	"gopkg.in/go-playground/validator.v9"
 )
 
 type MovieService struct {
@@ -17,20 +18,27 @@ func NewMovieServices(repo repository.MovieRepository) MovieService {
 }
 
 func (m *MovieService) Create(ent entities.Movie) error {
-	if len(ent.Title) == 0 {
-		return errors.New("bad request")
-	} else if len(ent.Director) == 0 {
-		return errors.New("bad request")
+
+	validate := validator.New()
+	err := validate.Struct(ent)
+	if err != nil {
+		return BadRequest
 	}
+
 	ent.SetId()
 	return m.movieRepository.Create(ent)
 
 }
 
-func (m *MovieService) Read(id string) (entities.Movie, error) {
+func (m *MovieService) ReadAll() (entities.DbMovie, error) {
+
+	return m.movieRepository.FindAll()
+}
+
+func (m *MovieService) ReadbyId(id string) (entities.Movie, error) {
 	errReturn := entities.Movie{}
 	if len(id) == 0 {
-		return errReturn, errors.New("bad request")
+		return errReturn, BadRequest
 	}
 	return m.movieRepository.FindById(id)
 }
