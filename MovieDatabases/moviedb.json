@@ -1,1 +1,75 @@
-{"Movies":[{"Id":"eb2cd454-9d32-43c6-929f-078692b8fc85","Title":"Agent 47","Genre":["Action","Suspense"],"Description":"A Programmed man is tasked to protect at all cost. He does all it takes...","Director":"Aleksander Bach","Actors":["David Bateson","Rupert Friend","Hannah Ware","Zachary Quinto","Michaela Caspar","Ciaran Hinds","Rolf Kanies","Mona Pirzad","Janice Koh","Charlene Beck"],"Rating":"87%"},{"Id":"cd120349-9935-4a7c-9f76-0b58473adb64","Title":"Agent 46","Genre":["Action","Suspense"],"Description":"A Programmed man is tasked to protect at all cost. He does all it takes...","Director":"Aleksander Bach","Actors":["David Bateson","Rupert Friend","Hannah Ware","Zachary Quinto","Michaela Caspar","Ciaran Hinds","Rolf Kanies","Mona Pirzad","Janice Koh","Charlene Beck"],"Rating":"87%"},{"Id":"5c32e82d-ee4f-4d6f-981b-a7cb13020331","Title":"Agent 46","Genre":["Action","Suspense"],"Description":"A Programmed man is tasked to protect at all cost. He does all it takes...","Director":"Aleksander Bach","Actors":["David Bateson","Rupert Friend","Hannah Ware","Zachary Quinto","Michaela Caspar","Ciaran Hinds","Rolf Kanies","Mona Pirzad","Janice Koh","Charlene Beck"],"Rating":"87%"},{"Id":"5285ef66-5113-4839-be8f-c0b7ab34db93","Title":"Agent 23","Genre":["Action","Suspense"],"Description":"A Programmed man is tasked to protect at all cost. He does all it takes...","Director":"Aleksander Bach","Actors":["David Bateson","Rupert Friend","Hannah Ware","Zachary Quinto","Michaela Caspar","Ciaran Hinds","Rolf Kanies","Mona Pirzad","Janice Koh","Charlene Beck"],"Rating":"87%"},{"Id":"342cbd13-35c1-472e-8b4e-13355f982f40","Title":"Agent 23","Genre":["Action","Suspense"],"Description":"A Programmed man is tasked to protect at all cost. He does all it takes...","Director":"Aleksander Bach","Actors":["David Bateson","Rupert Friend","Hannah Ware","Zachary Quinto","Michaela Caspar","Ciaran Hinds","Rolf Kanies","Mona Pirzad","Janice Koh","Charlene Beck"],"Rating":"87%"}]}
+{
+ "Movies": [
+  {
+   "Id": "18314fde-7f4d-4a28-9c10-5bc0febdf3fe",
+   "Title": "Agent 47",
+   "Genre": [
+    "Action",
+    "Suspense"
+   ],
+   "Description": "A Programmed man is tasked to protect at all cost. He does all it takes...",
+   "Director": "Aleksander Bach",
+   "Actors": [
+    "David Bateson",
+    "Rupert Friend",
+    "Hannah Ware",
+    "Zachary Quinto",
+    "Michaela Caspar",
+    "Ciaran Hinds",
+    "Rolf Kanies",
+    "Mona Pirzad",
+    "Janice Koh",
+    "Charlene Beck"
+   ],
+   "Rating": "87%"
+  },
+  {
+   "Id": "b0cfdef6-fb65-47d8-bbaf-8c59a0cc1019",
+   "Title": "Central Intelligence",
+   "Genre": [
+    "Action",
+    "Comedy"
+   ],
+   "Description": "The film stars Kevin hart aND Dwayne Johnson as two old high school classmates who go on the run after one of them joins the CIA to save the world from a terrorist who intends to sell satelite codes. ",
+   "Director": "Rawson Marshall Thurber",
+   "Actors": [
+    "Kevin Hart",
+    "Dwayne 'The Rock' Johnson",
+    "Aaron Paul",
+    "Amy Ryan",
+    "Danielle Nicolet",
+    "Jason Bateman",
+    "Megan Park",
+    "Ryan Hansen",
+    "David Stassen",
+    "Tim Griffin"
+   ],
+   "Rating": "71%"
+  },
+  {
+   "Id": "cd9e671e-bc8a-4089-916c-8c129fc2a944",
+   "Title": "The 100",
+   "Genre": [
+    "Sci-fi",
+    "Action",
+    "Drama",
+    "Adventure"
+   ],
+   "Description": "The 100 is a show that takes us to the darkest depths of humanity.",
+   "Director": "Jason Rothenberg",
+   "Actors": [
+    "Eliza Taylor",
+    "Bob Morley",
+    "Lindsey Morgan",
+    "Zachary Quinto",
+    "Richard Harmon",
+    "Tasya Teles",
+    "Adina Porter",
+    "Devon Bostick",
+    "Jarod Joseph",
+    "Lola Flanery"
+   ],
+   "Rating": "93%"
+  }
+ ]
+}

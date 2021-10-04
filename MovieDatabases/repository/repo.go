@@ -31,14 +31,13 @@ func (r *MovieRepository) Create(userMovie entities.Movie) error {
 
 	dbEnt.Movies = append(dbEnt.Movies, userMovie)
 
-	Marshaled, err := json.Marshal(&dbEnt)
+	Marshaled, err := json.MarshalIndent(&dbEnt, "", " ")
 	if err != nil {
 		return ServerError
 	}
 	ioutil.WriteFile(r.filename, Marshaled, 0644)
 
 	return nil
-
 }
 
 func (r *MovieRepository) FindAll() (entities.DbMovie, error) {
@@ -77,4 +76,31 @@ func (r *MovieRepository) FindById(passedId string) (entities.Movie, error) {
 	}
 
 	return errEnt, NotFound
+}
+
+func (r *MovieRepository) DeleteById(passedId string) error {
+	dbEnt := entities.DbMovie{}
+	file, err := ioutil.ReadFile(r.filename)
+	if err != nil {
+		return ServerError
+	}
+
+	err = json.Unmarshal(file, &dbEnt)
+	if err != nil {
+		return ServerError
+	}
+
+	for i, v := range dbEnt.Movies {
+		if v.Id == passedId {
+			dbEnt.Movies = append(dbEnt.Movies[:i], dbEnt.Movies[i+1:]...)
+			Marshaled, err := json.MarshalIndent(&dbEnt, "", " ")
+			if err != nil {
+				return ServerError
+			}
+			ioutil.WriteFile(r.filename, Marshaled, 0644)
+			return nil
+		}
+	}
+
+	return NotFound
 }

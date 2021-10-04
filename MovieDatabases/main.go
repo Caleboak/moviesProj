@@ -16,8 +16,9 @@ func main() {
 	handle := handler.NewMovieHandler(serv)
 	r := mux.NewRouter()
 	r.HandleFunc("/Movie", handle.CreateMovie).Methods("POST")
-	r.HandleFunc("/Movie/GetAll", handle.ReadAllMovie).Methods("GET")
+	r.HandleFunc("/Movie", handle.ReadAllMovie).Methods("GET")
 	r.HandleFunc("/Movie/{id}", handle.ReadMovie).Methods("GET")
+	r.HandleFunc("/Movie/{id}", handle.DeleteMovie).Methods("DELETE")
 	svr := &http.Server{
 		Handler: r,
 		Addr:    "127.0.0.1:8080",

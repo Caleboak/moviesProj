@@ -27,6 +27,8 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
+	//buf, _ := json.Marshal(&ent)
+	//ioutil.WriteFile("moviedb.json", buf, 0644)
 
 	err = m.movieService.Create(ent)
 	if err != nil {
@@ -44,7 +46,7 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 
 }
 
@@ -67,7 +69,7 @@ func (m *MovieHandler) ReadAllMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusFound)
 	Marshaled, _ := json.MarshalIndent(movie, "", " ")
 
 	w.Write([]byte(Marshaled))
@@ -94,8 +96,33 @@ func (m *MovieHandler) ReadMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusFound)
 	Marshaled, _ := json.MarshalIndent(movie, "", " ")
 
 	w.Write([]byte(Marshaled))
+}
+
+func (m *MovieHandler) DeleteMovie(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	err := m.movieService.DeletebyId(id)
+
+	if err != nil {
+		switch err {
+		case services.BadRequest:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+
+		case repository.NotFound:
+			http.Error(w, err.Error(), http.StatusNotFound)
+
+		case repository.ServerError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
 }
