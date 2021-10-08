@@ -19,6 +19,7 @@ func main() {
 	r.HandleFunc("/Movie", handle.ReadAllMovie).Methods("GET")
 	r.HandleFunc("/Movie/{id}", handle.ReadMovie).Methods("GET")
 	r.HandleFunc("/Movie/{id}", handle.DeleteMovie).Methods("DELETE")
+	r.HandleFunc("/Movie/{id}", handle.UpdateMovie).Methods("PUT")
 	svr := &http.Server{
 		Handler: r,
 		Addr:    "127.0.0.1:8080",

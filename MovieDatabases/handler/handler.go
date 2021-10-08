@@ -122,7 +122,35 @@ func (m *MovieHandler) DeleteMovie(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+}
+
+func (m *MovieHandler) UpdateMovie(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	ent := entities.Movie{}
+
+	err := json.NewDecoder(r.Body).Decode(&ent)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	err = m.movieService.UpdatebyId(id, ent)
+	if err != nil {
+		switch err {
+		case services.BadRequest:
+			http.Error(w, err.Error(), http.StatusBadRequest)
+
+		case repository.NotFound:
+			http.Error(w, err.Error(), http.StatusNotFound)
+
+		case repository.ServerError:
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		}
+	}
 	w.WriteHeader(http.StatusOK)
 
 }

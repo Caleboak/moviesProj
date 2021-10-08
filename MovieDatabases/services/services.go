@@ -30,7 +30,7 @@ func (m *MovieService) Create(ent entities.Movie) error {
 
 func (m *MovieService) ReadAll() (entities.DbMovie, error) {
 
-	return m.movieRepository.FindAll()
+	return m.movieRepository.GetAll()
 }
 
 func (m *MovieService) ReadbyId(id string) (entities.Movie, error) {
@@ -38,7 +38,7 @@ func (m *MovieService) ReadbyId(id string) (entities.Movie, error) {
 	if len(id) == 0 {
 		return errReturn, BadRequest
 	}
-	return m.movieRepository.FindById(id)
+	return m.movieRepository.GetById(id)
 }
 
 func (m *MovieService) DeletebyId(id string) error {
@@ -46,5 +46,19 @@ func (m *MovieService) DeletebyId(id string) error {
 	if len(id) == 0 {
 		return BadRequest
 	}
-	return m.movieRepository.DeleteById(id)
+	return m.movieRepository.Delete(id)
+}
+
+func (m *MovieService) UpdatebyId(id string, ent entities.Movie) error {
+	if len(id) == 0 {
+		return BadRequest
+	}
+	validate := validator.New()
+	err := validate.Struct(ent)
+	if err != nil {
+		return BadRequest
+	}
+
+	return m.movieRepository.Update(id, ent)
+
 }
