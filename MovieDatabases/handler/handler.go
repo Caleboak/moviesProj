@@ -11,12 +11,20 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type MovieHandler struct {
-	movieService services.MovieService
+type IMovieHandler interface {
+	CreateMovie(w http.ResponseWriter, r *http.Request)
+	ReadAllMovie(w http.ResponseWriter, r *http.Request)
+	ReadMovie(w http.ResponseWriter, r *http.Request)
+	DeleteMovie(w http.ResponseWriter, r *http.Request)
+	UpdateMovie(w http.ResponseWriter, r *http.Request)
 }
 
-func NewMovieHandler(mov services.MovieService) MovieHandler {
-	return MovieHandler{
+type MovieHandler struct {
+	movieService services.IMovieService
+}
+
+func NewMovieHandler(mov services.IMovieService) IMovieHandler {
+	return &MovieHandler{
 		movieService: mov,
 	}
 }
