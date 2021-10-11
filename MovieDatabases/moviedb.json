@@ -73,7 +73,7 @@
   },
   {
    "Id": "c433b8e1-4a58-43b4-ad17-030507acb846",
-   "Title": "Powerless",
+   "Title": "Power",
    "Genre": [
     "Action",
     "Suspense",
@@ -94,6 +94,29 @@
     "Sinqua Walls"
    ],
    "Rating": "81%"
+  },
+  {
+   "Id": "ca2fca5e-d0e8-487d-8461-4108ea80654a",
+   "Title": "Central Intelligence",
+   "Genre": [
+    "Action",
+    "Comedy"
+   ],
+   "Description": "The film stars Kevin hart aND Dwayne Johnson as two old high school classmates who go on the run after one of them joins the CIA to save the world from a terrorist who intends to sell satelite codes. ",
+   "Director": "Rawson Marshall Thurber",
+   "Actors": [
+    "Kevin Hart",
+    "Dwayne 'The Rock' Johnson",
+    "Aaron Paul",
+    "Amy Ryan",
+    "Danielle Nicolet",
+    "Jason Bateman",
+    "Megan Park",
+    "Ryan Hansen",
+    "David Stassen",
+    "Tim Griffin"
+   ],
+   "Rating": "71%"
   }
  ]
 }

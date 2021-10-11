@@ -55,6 +55,7 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	w.WriteHeader(http.StatusCreated)
+	w.Write([]byte("The movie has been created"))
 
 }
 
@@ -131,6 +132,7 @@ func (m *MovieHandler) DeleteMovie(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("The movie has been deleted"))
 
 }
 
@@ -160,5 +162,6 @@ func (m *MovieHandler) UpdateMovie(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("The movie has been updated"))
 
 }
