@@ -71,12 +71,15 @@ func (m *MovieHandler) ReadAllMovie(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case services.BadRequest:
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 
 		case repository.NotFound:
 			http.Error(w, err.Error(), http.StatusNotFound)
+			return
 
 		case repository.ServerError:
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 
 		}
 	}
@@ -98,12 +101,15 @@ func (m *MovieHandler) ReadMovie(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case services.BadRequest:
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 
 		case repository.NotFound:
 			http.Error(w, err.Error(), http.StatusNotFound)
+			return
 
 		case repository.ServerError:
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 
 		}
 	}
@@ -125,12 +131,15 @@ func (m *MovieHandler) DeleteMovie(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case services.BadRequest:
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 
 		case repository.NotFound:
 			http.Error(w, err.Error(), http.StatusNotFound)
+			return
 
 		case repository.ServerError:
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 
 		}
 	}
@@ -156,12 +165,15 @@ func (m *MovieHandler) UpdateMovie(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case services.BadRequest:
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 
 		case repository.NotFound:
 			http.Error(w, err.Error(), http.StatusNotFound)
+			return
 
 		case repository.ServerError:
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 
 		}
 	}
