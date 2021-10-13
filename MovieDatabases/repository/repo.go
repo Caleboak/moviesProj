@@ -6,20 +6,12 @@ import (
 	"io/ioutil"
 )
 
-type IMovieRepository interface {
-	Create(userMovie entities.Movie) error
-	GetAll() (entities.DbMovie, error)
-	GetById(passedId string) (entities.Movie, error)
-	Delete(passedId string) error
-	Update(id string, ent entities.Movie) error
-}
-
 type MovieRepository struct {
 	filename string
 }
 
-func NewMovieRepository(fn string) IMovieRepository {
-	return &MovieRepository{
+func NewMovieRepository(fn string) MovieRepository {
+	return MovieRepository{
 		filename: fn,
 	}
 }

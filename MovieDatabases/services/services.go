@@ -7,21 +7,21 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-type IMovieService interface {
-	Create(ent entities.Movie) error
-	ReadAll() (entities.DbMovie, error)
-	ReadbyId(id string) (entities.Movie, error)
-	DeletebyId(id string) error
-	UpdatebyId(id string, ent entities.Movie) error
+type IMovieRepository interface {
+	Create(userMovie entities.Movie) error
+	GetAll() (entities.DbMovie, error)
+	GetById(passedId string) (entities.Movie, error)
+	Delete(passedId string) error
+	Update(id string, ent entities.Movie) error
 }
 
 type MovieService struct {
-	movieRepository repository.IMovieRepository
+	movieRepository IMovieRepository
 }
 
-func NewMovieServices(repo repository.IMovieRepository) IMovieService {
-	return &MovieService{
-		movieRepository: repo,
+func NewMovieServices(repo repository.MovieRepository) MovieService {
+	return MovieService{
+		movieRepository: &repo,
 	}
 }
 

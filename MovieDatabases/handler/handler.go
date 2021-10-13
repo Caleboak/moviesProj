@@ -4,6 +4,7 @@ import (
 	"MovieDatabases/entities"
 	"MovieDatabases/repository"
 	"MovieDatabases/services"
+
 	"encoding/json"
 
 	"net/http"
@@ -11,21 +12,21 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type IMovieHandler interface {
-	CreateMovie(w http.ResponseWriter, r *http.Request)
-	ReadAllMovie(w http.ResponseWriter, r *http.Request)
-	ReadMovie(w http.ResponseWriter, r *http.Request)
-	DeleteMovie(w http.ResponseWriter, r *http.Request)
-	UpdateMovie(w http.ResponseWriter, r *http.Request)
+type IMovieService interface {
+	Create(ent entities.Movie) error
+	ReadAll() (entities.DbMovie, error)
+	ReadbyId(id string) (entities.Movie, error)
+	DeletebyId(id string) error
+	UpdatebyId(id string, ent entities.Movie) error
 }
 
 type MovieHandler struct {
-	movieService services.IMovieService
+	movieService IMovieService
 }
 
-func NewMovieHandler(mov services.IMovieService) IMovieHandler {
-	return &MovieHandler{
-		movieService: mov,
+func NewMovieHandler(mov services.MovieService) MovieHandler {
+	return MovieHandler{
+		movieService: &mov,
 	}
 }
 
@@ -43,12 +44,15 @@ func (m *MovieHandler) CreateMovie(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case services.BadRequest:
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 
 		case repository.NotFound:
 			http.Error(w, err.Error(), http.StatusNotFound)
+			return
 
 		case repository.ServerError:
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 
 		}
 	}
