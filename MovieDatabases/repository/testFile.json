@@ -1,0 +1,30 @@
+{
+ "Movies": [
+  {
+   "Id": "100",
+   "Title": "Squid Game",
+   "Genre": [
+    "suspense"
+   ],
+   "Description": "People are forced to play a game to win money",
+   "Director": "Don't know",
+   "Actors": [
+    "Sang Woo"
+   ],
+   "Rating": "78%"
+  },
+  {
+   "Id": "200",
+   "Title": "On my Block",
+   "Genre": [
+    "suspense"
+   ],
+   "Description": "Bunch of kids looking for a treasure",
+   "Director": "Blah Blah",
+   "Actors": [
+    "Monsee"
+   ],
+   "Rating": "75%"
+  }
+ ]
+}
