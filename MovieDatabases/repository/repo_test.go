@@ -19,7 +19,7 @@ func TestMain(m *testing.M) {
 
 	exitVal := m.Run()
 	log.Println("Tests ended, deleting TestFile...")
-	defer os.Remove(file)
+	os.Remove(file)
 	os.Exit(exitVal)
 }
 
