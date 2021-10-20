@@ -3,7 +3,6 @@ package repository
 import (
 	"MovieDatabases/entities"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -67,7 +66,7 @@ func TestCreate(t *testing.T) {
 	//Assert
 	testStruct := entities.DbMovie{}
 	json.Unmarshal(readFile, &testStruct)
-	fmt.Println(testStruct)
+
 	assert.Equal(t, jsonData1, testStruct.Movies[0])
 	assert.Equal(t, jsonData2, testStruct.Movies[1])
 
@@ -122,10 +121,12 @@ func TestGetById(t *testing.T) {
 	entMovies1, err := r.GetById(id1)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 	entMovies2, err := r.GetById(id2)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	//Assert
@@ -133,5 +134,79 @@ func TestGetById(t *testing.T) {
 	assert.Equal(t, entMovies2, testdbStruct.Movies[1])
 	assert.NotEqual(t, entMovies1, testdbStruct.Movies[1])
 	assert.NotEqual(t, entMovies2, testdbStruct.Movies[0])
+
+}
+
+func TestDelete(t *testing.T) {
+	id := "100"
+
+	file := "testFile.json"
+	r := MovieRepository{
+		file,
+	}
+	err := r.Delete(id)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	readFile, err := ioutil.ReadFile(file)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	testdbStruct := entities.DbMovie{}
+
+	err = json.Unmarshal(readFile, &testdbStruct)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	assert.Equal(t, len(testdbStruct.Movies), 1)
+}
+
+func TestId(t *testing.T) {
+	//Arrange
+	id := "200"
+
+	updateStruct := entities.Movie{
+		Id:          "200",
+		Title:       "The 100",
+		Genre:       []string{"Suspense", "Action"},
+		Description: "The world becomes unsafe, they are forced to find livable surroundings",
+		Director:    "Don't care",
+		Actors:      []string{"Clarke", "Bellamy", "Hope"},
+		Rating:      "89%",
+	}
+
+	file := "testFile.json"
+	r := MovieRepository{
+		file,
+	}
+
+	//Act
+	err := r.Update(id, updateStruct)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	readFile, err := ioutil.ReadFile(file)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	testdbStruct := entities.DbMovie{}
+	err = json.Unmarshal(readFile, &testdbStruct)
+	if err != nil {
+		t.Errorf("Error: %v", err)
+		t.Fatal()
+	}
+
+	//Assert
+	assert.Equal(t, updateStruct, testdbStruct.Movies[1])
 
 }
