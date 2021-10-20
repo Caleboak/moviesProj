@@ -2,29 +2,19 @@
  "Movies": [
   {
    "Id": "100",
-   "Title": "Squid Game",
+   "Title": "The 100",
    "Genre": [
-    "suspense"
+    "Suspense",
+    "Action"
    ],
-   "Description": "People are forced to play a game to win money",
-   "Director": "Don't know",
+   "Description": "The world becomes unsafe, they are forced to find livable surroundings",
+   "Director": "Don't care",
    "Actors": [
-    "Sang Woo"
+    "Clarke",
+    "Bellamy",
+    "Hope"
    ],
-   "Rating": "78%"
-  },
-  {
-   "Id": "200",
-   "Title": "On my Block",
-   "Genre": [
-    "suspense"
-   ],
-   "Description": "Bunch of kids looking for a treasure",
-   "Director": "Blah Blah",
-   "Actors": [
-    "Monsee"
-   ],
-   "Rating": "75%"
+   "Rating": "89%"
   }
  ]
 }

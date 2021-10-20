@@ -4,11 +4,24 @@ import (
 	"MovieDatabases/entities"
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
+
+func TestMain(m *testing.M) {
+	file := "testFile.json"
+
+	os.Create(file)
+	log.Println("TestFile Created, Test started")
+
+	exitVal := m.Run()
+	log.Println("Tests ended, deleting TestFile...")
+	defer os.Remove(file)
+	os.Exit(exitVal)
+}
 
 func TestCreate(t *testing.T) {
 
@@ -34,14 +47,13 @@ func TestCreate(t *testing.T) {
 	}
 	file := "testFile.json"
 
-	os.Create(file)
-
 	c := entities.DbMovie{}
 	jsonMovie, _ := json.Marshal(&c)
 
 	err := ioutil.WriteFile(file, jsonMovie, 0644)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	r := MovieRepository{
@@ -52,15 +64,18 @@ func TestCreate(t *testing.T) {
 	err = r.Create(jsonData1)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 	err = r.Create(jsonData2)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	readFile, err := ioutil.ReadFile(file)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	//Assert
@@ -85,12 +100,14 @@ func TestGetAll(t *testing.T) {
 	err := json.Unmarshal(fileData, &testdbStruct)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	//Act
 	dbEnt, err := r.GetAll()
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
 	//Assert
@@ -116,8 +133,10 @@ func TestGetById(t *testing.T) {
 	err := json.Unmarshal(fileData, &testdbStruct)
 	if err != nil {
 		t.Errorf("Error: %v", err)
+		t.Fatal()
 	}
 
+	//Act
 	entMovies1, err := r.GetById(id1)
 	if err != nil {
 		t.Errorf("Error: %v", err)
@@ -138,12 +157,15 @@ func TestGetById(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	id := "100"
+	//Arrange
+	id := "200"
 
 	file := "testFile.json"
 	r := MovieRepository{
 		file,
 	}
+
+	//Act
 	err := r.Delete(id)
 	if err != nil {
 		t.Errorf("Error: %v", err)
@@ -164,15 +186,16 @@ func TestDelete(t *testing.T) {
 		t.Fatal()
 	}
 
+	//Assert
 	assert.Equal(t, len(testdbStruct.Movies), 1)
 }
 
-func TestId(t *testing.T) {
+func TestUpdate(t *testing.T) {
 	//Arrange
-	id := "200"
+	id := "100"
 
 	updateStruct := entities.Movie{
-		Id:          "200",
+		Id:          "100",
 		Title:       "The 100",
 		Genre:       []string{"Suspense", "Action"},
 		Description: "The world becomes unsafe, they are forced to find livable surroundings",
@@ -207,6 +230,6 @@ func TestId(t *testing.T) {
 	}
 
 	//Assert
-	assert.Equal(t, updateStruct, testdbStruct.Movies[1])
+	assert.Equal(t, updateStruct, testdbStruct.Movies[0])
 
 }
