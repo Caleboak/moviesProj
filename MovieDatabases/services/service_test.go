@@ -28,11 +28,14 @@ func TestCreate(t *testing.T) {
 }
 
 func TestReadById(t *testing.T) {
+	//Arrange
 	id := ""
 
+	//Act
 	s := MovieService{}
 	_, err := s.ReadbyId(id)
 
+	//Assert
 	assert.EqualErrorf(t, err, BadRequest.Error(), "Error should return %v, but got %v", BadRequest.Error(), err)
 
 }
